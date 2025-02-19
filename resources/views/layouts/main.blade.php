@@ -242,7 +242,7 @@
                         <!-- Nav item -->
                         <!-- Nav item -->
                         <li class="nav-item">
-                            <a class="nav-link has-arrow " href="{{ route('dashboard') }}">
+                            <a class="nav-link has-arrow " href="{{ route('beranda') }}">
                                 <i data-feather="message-square" class="nav-icon me-2 icon-xxs"></i>
                                 Dashboard
                             </a>
@@ -256,7 +256,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link has-arrow " href="#">
+                            <a class="nav-link has-arrow " href="{{ route('kirimPesan') }}">
                                 <i data-feather="message-square" class="nav-icon me-2 icon-xxs"></i>
                                 Kirim Pesan
                             </a>
