@@ -242,75 +242,26 @@
                         <!-- Nav item -->
                         <!-- Nav item -->
                         <li class="nav-item">
-                            <a class="nav-link has-arrow " href="{{ route('beranda') }}">
-                                <i data-feather="message-square" class="nav-icon me-2 icon-xxs"></i>
-                                Dashboard
+                            <a class="nav-link has-arrow " href="{{ route('device') }}">
+                                <i data-feather="monitor" class="nav-icon me-2 icon-xxs"></i>
+                                Device
                             </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link has-arrow " href="{{ route('tambahPerangkat') }}">
-                                <i data-feather="message-square" class="nav-icon me-2 icon-xxs"></i>
-                                Tambah Perangkat
-                            </a>
-                        </li>
-
                         <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('kirimPesan') }}">
-                                <i data-feather="message-square" class="nav-icon me-2 icon-xxs"></i>
-                                Kirim Pesan
+                                <i data-feather="send" class="nav-icon me-2 icon-xxs"></i>
+                                Send
                             </a>
-                        </li>
-
-                        <!-- Nav item -->
-                        <li class="nav-item">
-                            <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse"
-                                data-bs-target="#navKanban" aria-expanded="false" aria-controls="navKanban">
-                                <i data-feather="layout" class="nav-icon me-2 icon-xxs"></i>
-                                Kanban
-                            </a>
-
-                            <div id="navKanban" class="collapse " data-bs-parent="#sideNavbar">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a class="nav-link has-arrow " href="pages/task-kanban-grid.html">Grid</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link has-arrow " href="pages/task-kanban-list.html">List</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-
-
-                        <li class="nav-item">
-                            <a class="nav-link has-arrow  collapsed " href="#!" data-bs-toggle="collapse"
-                                data-bs-target="#navDocs" aria-expanded="false" aria-controls="navDocs">
-                                <i data-feather="package" class="nav-icon me-2 icon-xxs"></i>
-                                Docs
-                            </a>
-                            <div id="navDocs" class="collapse " data-bs-parent="#sideNavbar">
-                                <ul class="nav flex-column">
-                                    <li class="nav-item"><a href="docs/index.html" class="nav-link ">Introduction</a>
-                                    </li>
-                                    <li class="nav-item"><a href="docs/environment-setup.html"
-                                            class="nav-link ">Environment setup</a></li>
-                                    <li class="nav-item"><a href="docs/working-with-gulp.html"
-                                            class="nav-link ">Working with Gulp</a></li>
-                                </ul>
-                            </div>
                         </li>
                     </ul>
                     <div class="card bg-light shadow-none text-center mx-4 my-8">
                         <div class="card-body py-6">
-                            <img src="{{ asset('dashuipro/assets/images/background/giftbox.png') }}"
-                                alt="Manz - Jasa Push Kontak" />
+                            <img src="{{ asset('dashuipro/assets/images/background/speaker1.png') }}"
+                                alt="Manz - Jasa Push Kontak" width="150" />
                             <div class="mt-4">
-                                <h5>Info Penting</h5>
-                                <p class="fs-6 mb-4">Upgrade your plan from a Free trial, to select Business Plan.
-                                    Start Now</p>
-                                <a href="#" class="btn btn-secondary btn-sm">Upgrade Now</a>
+                                <h5>Web Push Kontak By Manz</h5>
+                                <p class="fs-6 mb-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. </p>
+                                <a href="#" class="btn btn-secondary btn-sm">Hubungi Manz</a>
                             </div>
                         </div>
                     </div>
@@ -340,8 +291,28 @@
 
     <script src="{{ asset('dashuipro/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('dashuipro/assets/js/vendors/chart.js') }}"></script>
+
+
+    <script src="{{ asset('dashuipro/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('dashuipro/assets/libs/feather-icons/dist/feather.min.js') }}"></script>
+        <script src="{{ asset('dashuipro/assets/libs/simplebar/dist/simplebar.min.js') }}"></script>
+
+        <!-- Theme JS -->
+        <script src="{{ asset('dashuipro/assets/js/theme.min.js') }}"></script>
+
+        <!-- popper js -->
+        <script src="{{ asset('dashuipro/assets/libs/%40popperjs/core/dist/umd/popper.min.js') }}"></script>
+
+        <!-- tippy js -->
+        <script src="{{ asset('dashuipro/assets/libs/tippy.js/dist/tippy-bundle.umd.min.js') }}"></script>
+        <script src="{{ asset('dashuipro/assets/js/vendors/tooltip.js') }}"></script>
+
+        <!-- Listjs required js scripts -->
+        <script src="{{ asset('dashuipro/assets/libs/list.js/dist/list.min.js') }}"></script>
+        <script src="{{ asset('dashuipro/assets/libs/list.pagination.js/dist/list.pagination.min.js') }}"></script>
+        <script src="{{ asset('dashuipro/cdn.jsdelivr.net/npm/moment%402.29.1/min/moment.min.js') }}"></script>
+
+        <!-- CRM Contact js -->
+        <script src="{{ asset('dashuipro/assets/js/vendors/crm-contact.init.js') }}"></script>
 </body>
-
-<!-- Mirrored from dashui.codescandy.com/dashuipro/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Feb 2025 10:28:51 GMT -->
-
 </html>

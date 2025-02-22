@@ -7,7 +7,7 @@ use App\Http\Controllers\TambahPerangkatController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('login');
+    return view('login')->name('landing');
 });
 
 Route::get('/dashboard', function () {
@@ -15,8 +15,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/beranda', [DashboardController::class, 'index'])->name('beranda');
-Route::get('/tambah-perangkat', [TambahPerangkatController::class, 'index'])->name('tambahPerangkat');
+Route::get('/device', [DashboardController::class, 'index'])->name('device');
 Route::get('/kirim-pesan', [KirimPesanController::class, 'index'])->name('kirimPesan');
 
 Route::middleware('auth')->group(function () {
