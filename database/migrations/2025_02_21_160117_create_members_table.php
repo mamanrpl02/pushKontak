@@ -13,15 +13,26 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->nama();
-            $table->noHp();
-            $table->email();
-            $table->password();
-            $table->tokenAkun();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('nama');
+            $table->string('noHp', 15);
+            $table->string('email');
             $table->string('password');
+            $table->string('tokenAkun');
+            $table->string('gambar')->nullable();
+            $table->timestamps(); // Pastikan ini ada
             $table->rememberToken();
         });
+
+        if (!Schema::hasTable('sessions')) {
+            Schema::create('sessions', function (Blueprint $table) {
+                $table->string('id')->primary();
+                $table->unsignedBigInteger('members_id')->nullable();
+                $table->string('ip_address', 45)->nullable();
+                $table->text('members_agent')->nullable();
+                $table->longText('payload');
+                $table->integer('last_activity');
+            });
+        }
     }
 
     /**

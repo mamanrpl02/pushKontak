@@ -11,11 +11,17 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
+     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(): RedirectResponse|View
     {
+        // Cek apakah member sudah login
+        if (Auth::guard('member')->check()) {
+            // Redirect ke halaman dashboard
+            return redirect()->route('dashboard');
+        }
+
         return view('auth.login');
     }
 
@@ -24,11 +30,22 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        // Pastikan menggunakan guard 'member'
+        $credentials = $request->only('email', 'password');
 
-        $request->session()->regenerate();
+        // Menggunakan Auth::guard('member')->attempt() untuk login member
+        if (Auth::guard('member')->attempt($credentials, $request->boolean('remember'))) {
+            // Regenerasi session untuk menghindari session fixation
+            $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+            // Redirect ke halaman dashboard jika login berhasil
+            return redirect()->route('/'); // pastikan 'dashboard' adalah rute yang benar
+        }
+
+        // Jika gagal login, kembalikan error
+        return back()->withErrors([
+            'email' => 'Email atau password Anda salah.',
+        ])->onlyInput('email');
     }
 
     /**
@@ -36,12 +53,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        // Logout guard 'member'
+        Auth::guard('member')->logout();
 
+        // Hapus session dan token CSRF
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
+        // Redirect ke halaman utama setelah logout
         return redirect('/');
     }
 }
