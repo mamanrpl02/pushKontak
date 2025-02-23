@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from dashui.codescandy.com/dashuipro/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Feb 2025 10:27:44 GMT -->
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -27,6 +25,7 @@
 
     <!-- Color modes -->
     <script src="{{ asset('dashuipro/assets/js/vendors/color-modes.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Libs CSS -->
     <link href="{{ asset('dashuipro/assets/libs/bootstrap-icons/font/bootstrap-icons.min.css') }}" rel="stylesheet" />
@@ -35,6 +34,9 @@
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ asset('dashuipro/assets/css/theme.min.css') }}">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> 
 
     <title>Push Kontak by Manz</title>
 </head>
@@ -48,6 +50,8 @@
                     <a class="navbar-brand d-block d-md-none" href="index.html">
                         <img src="{{ asset('dashuipro/assets/images/brand/logo/logo-2.svg') }}" alt="Image" />
                     </a>
+
+
 
                     <a id="nav-toggle" href="#!" class="ms-auto ms-md-0 me-0 me-lg-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
@@ -87,24 +91,24 @@
                                     <i class="bi theme-icon-active"></i>
                                     <span class="visually-hidden bs-theme-text">Toggle theme</span>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bs-theme-text">
+                                <ul class="dropdown-menu dropdown-menu-end shadow">
                                     <li>
                                         <button type="button" class="dropdown-item d-flex align-items-center"
-                                            data-bs-theme-value="light" aria-pressed="false">
+                                            data-bs-theme-value="light">
                                             <i class="bi theme-icon bi-sun-fill"></i>
                                             <span class="ms-2">Light</span>
                                         </button>
                                     </li>
                                     <li>
                                         <button type="button" class="dropdown-item d-flex align-items-center"
-                                            data-bs-theme-value="dark" aria-pressed="false">
+                                            data-bs-theme-value="dark">
                                             <i class="bi theme-icon bi-moon-stars-fill"></i>
                                             <span class="ms-2">Dark</span>
                                         </button>
                                     </li>
                                     <li>
                                         <button type="button" class="dropdown-item d-flex align-items-center active"
-                                            data-bs-theme-value="auto" aria-pressed="true">
+                                            data-bs-theme-value="auto">
                                             <i class="bi theme-icon bi-circle-half"></i>
                                             <span class="ms-2">Auto</span>
                                         </button>
@@ -112,6 +116,7 @@
                                 </ul>
                             </div>
                         </li>
+
 
                         <li class="dropdown stopevent ms-2">
                             <a class="btn btn-ghost btn-icon rounded-circle" href="#!" role="button"
@@ -187,37 +192,25 @@
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                                 <div class="px-4 pb-0 pt-2">
                                     <div class="lh-1">
-                                        <h5 class="mb-1">John E. Grainger</h5>
-                                        <a href="#!" class="text-inherit fs-6">View my profile</a>
+                                        <h5 class="mb-1">{{ $member->nama }}</h5>
+                                        {{-- <a href="#!" class="text-inherit fs-6">View my profile</a> --}}
                                     </div>
                                     <div class="dropdown-divider mt-3 mb-2"></div>
                                 </div>
 
                                 <ul class="list-unstyled">
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="#!">
-                                            <i class="me-2 icon-xxs dropdown-item-icon" data-feather="user"></i>
-                                            Edit Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#!">
-                                            <i class="me-2 icon-xxs dropdown-item-icon" data-feather="activity"></i>
-                                            Activity Log
-                                        </a>
-                                    </li>
 
                                     <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="#!">
-                                            <i class="me-2 icon-xxs dropdown-item-icon" data-feather="settings"></i>
-                                            Settings
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="index.html">
+                                        <a class="dropdown-item" href="#"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="me-2 icon-xxs dropdown-item-icon" data-feather="power"></i>
                                             Sign Out
                                         </a>
+
+                                        <form id="logout-form" action="{{ route('member.logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
                                     </li>
                                 </ul>
                             </div>
@@ -293,26 +286,20 @@
     <script src="{{ asset('dashuipro/assets/js/vendors/chart.js') }}"></script>
 
 
-    <script src="{{ asset('dashuipro/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('dashuipro/assets/libs/feather-icons/dist/feather.min.js') }}"></script>
-        <script src="{{ asset('dashuipro/assets/libs/simplebar/dist/simplebar.min.js') }}"></script>
+    <!-- popper js -->
+    <script src="{{ asset('dashuipro/assets/libs/%40popperjs/core/dist/umd/popper.min.js') }}"></script>
 
-        <!-- Theme JS -->
-        <script src="{{ asset('dashuipro/assets/js/theme.min.js') }}"></script>
+    <!-- tippy js -->
+    <script src="{{ asset('dashuipro/assets/libs/tippy.js/dist/tippy-bundle.umd.min.js') }}"></script>
+    <script src="{{ asset('dashuipro/assets/js/vendors/tooltip.js') }}"></script>
 
-        <!-- popper js -->
-        <script src="{{ asset('dashuipro/assets/libs/%40popperjs/core/dist/umd/popper.min.js') }}"></script>
+    <!-- Listjs required js scripts -->
+    <script src="{{ asset('dashuipro/assets/libs/list.js/dist/list.min.js') }}"></script>
+    <script src="{{ asset('dashuipro/assets/libs/list.pagination.js/dist/list.pagination.min.js') }}"></script>
+    <script src="{{ asset('dashuipro/cdn.jsdelivr.net/npm/moment%402.29.1/min/moment.min.js') }}"></script>
 
-        <!-- tippy js -->
-        <script src="{{ asset('dashuipro/assets/libs/tippy.js/dist/tippy-bundle.umd.min.js') }}"></script>
-        <script src="{{ asset('dashuipro/assets/js/vendors/tooltip.js') }}"></script>
-
-        <!-- Listjs required js scripts -->
-        <script src="{{ asset('dashuipro/assets/libs/list.js/dist/list.min.js') }}"></script>
-        <script src="{{ asset('dashuipro/assets/libs/list.pagination.js/dist/list.pagination.min.js') }}"></script>
-        <script src="{{ asset('dashuipro/cdn.jsdelivr.net/npm/moment%402.29.1/min/moment.min.js') }}"></script>
-
-        <!-- CRM Contact js -->
-        <script src="{{ asset('dashuipro/assets/js/vendors/crm-contact.init.js') }}"></script>
+    <!-- CRM Contact js -->
+    <script src="{{ asset('dashuipro/assets/js/vendors/crm-contact.init.js') }}"></script>
 </body>
+
 </html>

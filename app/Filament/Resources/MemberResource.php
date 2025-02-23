@@ -44,13 +44,19 @@ class MemberResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('nama')->sortable(),
+                Tables\Columns\TextColumn::make('noHp')->sortable(),
+                Tables\Columns\TextColumn::make('email')->sortable(),
+                Tables\Columns\TextColumn::make('gambar')->sortable(),
+                Tables\Columns\TextColumn::make('tokenAkun')->sortable(),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

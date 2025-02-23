@@ -1,52 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-    {{-- <div class="app-content-area">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-12">
-                    <!-- Page header -->
-                    <div class="d-flex justify-content-between align-items-center mb-5">
-                        <h3 class="mb-0">Create a Post</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-9 col-lg-8 col-md-12 col-12">
-                    <!-- Card -->
-                    <div class="card border-0 mb-4">
-                        <!-- Card header -->
-                        <div class="card-header">
-                            <h4 class="mb-0">Tambahkan Perangkat</h4>
-                        </div>
-                        <!-- Card body -->
-                        <div class="card-body">
-                            <div class="mb-3 col-md-9">
-                                <!-- Title -->
-                                <label for="postTitle" class="form-label">Perangkat</label>
-                                <input type="text" id="postTitle" class="form-control" placeholder="Nama Perangkat" />
-
-                            </div>
-
-                            <!-- Slug -->
-                            <div class="mb-3 col-md-9">
-                                <label for="basic-url" class="form-label">Nomor</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="basic-url" aria-describedby="slug"
-                                        placeholder="628123456789" />
-                                </div>
-                            </div>
-                            <a href="#!" class="btn btn-primary">Tambah</a>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div> --}}
-
     <!-- Container fluid -->
     <div class="app-content-area">
         <div class="container-fluid">
@@ -54,7 +8,7 @@
                 <div class="col-lg-12 col-md-12 col-12">
                     <!-- Page header -->
                     <div class="mb-5">
-                        <h3 class="mb-0 ">Device</h3>
+                        {{-- <h3 class="mb-0 ">{{ $member->nama }}</h3> --}}
 
                     </div>
                 </div>
@@ -101,24 +55,24 @@
 
                                                 <th>Nama</th>
                                                 <th>Nomor</th>
-                                                <th>Status</th>
                                                 <th>Quota</th>
+                                                <th>Status</th>
                                                 <th>Order Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-
                                                 <td>Steve Nelson</td>
                                                 <td>08123123123</td>
-                                                <td><span class="badge bg-success">Connect</span></td>
                                                 <td>1000</td>
-                                                <td><span class="badge badge-success-soft text-success">Delivered</span>
+                                                <td><span class="badge bg-success p-3">Connect</span></td>
+                                                <td>
+                                                    <button class="btn btn-warning" type="submit" style=" color:white" > <i class="bi bi-wifi-off" style="font-size: 1.1rem; align-items:center; text-align:center;"></i>Disconect</button>
+                                                    <button class="btn btn-primary" type="submit"><i class="bi bi-lock" style="font-size: 1.1rem; align-items:center; text-align:center"></i> Coppy Token</button>
+                                                    <button class="btn btn-danger" type="submit"><i class="bi bi-trash3" style="font-size: 1.1rem; align-items:center; text-align:center"></i>Delete</button>
                                                 </td>
                                                 <td>
-
-
                                                     <div class="dropdown">
                                                         <a class="btn btn-icon btn-sm btn-ghost rounded-circle"
                                                             href="#!" role="button" data-bs-toggle="dropdown"
@@ -141,17 +95,16 @@
                                                 </td>
                                             </tr>
                                             <tr>
-
-
                                                 <td>Kimberly Sullivan</td>
                                                 <td>08212301230</td>
-                                                <td><span class="badge bg-danger">Disconect</span></td>
                                                 <td>1000</td>
-                                                <td><span class="badge badge-success-soft text-success">Delivered</span>
+                                                <td><span class="badge bg-danger p-3"> Disconnect</span></td>
+                                                <td>
+                                                    <button class="btn btn-success " type="submit"><i class="bi bi-link-45deg" style="font-size: 1.1rem; align-items:center; text-align:center"></i>Connect</button>
+                                                    <button class="btn btn-primary" type="submit"><i class="bi bi-lock" style="font-size: 1.1rem; align-items:center; text-align:center"></i> Coppy Token</button>
+                                                    <button class="btn btn-danger" type="submit"><i class="bi bi-trash3" style="font-size: 1.1rem; align-items:center; text-align:center"></i>Delete</button>
                                                 </td>
                                                 <td>
-
-
                                                     <div class="dropdown">
                                                         <a class="btn btn-icon btn-sm btn-ghost rounded-circle"
                                                             href="#!" role="button" data-bs-toggle="dropdown"
@@ -174,16 +127,16 @@
                                                 </td>
                                             </tr>
                                             <tr>
-
                                                 <td>Elliott Potts</td>
                                                 <td>081239123912</td>
-                                                <td><span class="badge bg-danger">Disconnect</span></td>
                                                 <td>1000</td>
-                                                <td><span class="badge badge-success-soft text-success">Delivered</span>
+                                                <td><span class="badge bg-danger p-3">Disconnect</span></td>
+                                                <td>
+                                                    <button class="btn btn-success " type="submit"><i class="bi bi-link-45deg" style="font-size: 1.1rem; align-items:center; text-align:center"></i>Connect</button>
+                                                    <button class="btn btn-primary" type="submit"><i class="bi bi-lock" style="font-size: 1.1rem; align-items:center; text-align:center"></i> Coppy Token</button>
+                                                    <button class="btn btn-danger" type="submit"><i class="bi bi-trash3" style="font-size: 1.1rem; align-items:center; text-align:center"></i>Delete</button>
                                                 </td>
                                                 <td>
-
-
                                                     <div class="dropdown">
                                                         <a class="btn btn-icon btn-sm btn-ghost rounded-circle"
                                                             href="#!" role="button" data-bs-toggle="dropdown"
@@ -210,16 +163,7 @@
                                 </div>
                             </div>
                             <div class="card-footer d-md-flex justify-content-between align-items-center">
-                                {{-- <span>Showing 1 to 8 of 12 entries</span>
-                                <nav class="mt-2 mt-md-0">
-                                    <ul class="pagination mb-0">
-                                        <li class="page-item"><a class="page-link" href="#!">Previous</a></li>
-                                        <li class="page-item"><a class="page-link active" href="#!">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#!">Next</a></li>
-                                    </ul>
-                                </nav> --}}
+
                             </div>
 
                         </div>
@@ -256,7 +200,7 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary" id="add-btn">
-                                + Add Contact
+                                + Add Device
                             </button>
                             <input type="hidden" class="form-control" placeholder="ID" id="id-field" />
                             <button class="btn btn-light ms-2" data-bs-dismiss="modal" aria-label="Close">

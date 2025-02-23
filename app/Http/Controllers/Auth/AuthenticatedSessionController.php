@@ -19,7 +19,7 @@ class AuthenticatedSessionController extends Controller
         // Cek apakah member sudah login
         if (Auth::guard('member')->check()) {
             // Redirect ke halaman dashboard
-            return redirect()->route('dashboard');
+            return redirect()->route('device');
         }
 
         return view('auth.login');
@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
             $request->session()->regenerate();
 
             // Redirect ke halaman dashboard jika login berhasil
-            return redirect()->route('/'); // pastikan 'dashboard' adalah rute yang benar
+            return redirect()->route('device'); // pastikan 'dashboard' adalah rute yang benar
         }
 
         // Jika gagal login, kembalikan error
@@ -61,6 +61,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect ke halaman utama setelah logout
-        return redirect('landing');
+        return redirect('/');
     }
 }
