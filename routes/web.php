@@ -7,15 +7,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KirimPesanController;
 use App\Http\Controllers\TambahPerangkatController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
-
+use App\Http\Controllers\UpdateGrupController;
 
 Route::middleware('auth:member')->group(function () {
     Route::get('/device', [DashboardController::class, 'index'])->name('device');
     Route::get('/kirim-pesan', [KirimPesanController::class, 'index'])->name('kirimPesan');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/updateGrup', [UpdateGrupController::class, 'index'])->name('updateGrup');
+
     Route::post('/member-logout', [AuthenticatedSessionController::class, 'destroy'])->name('member.logout');
 });
 
