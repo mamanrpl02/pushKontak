@@ -47,10 +47,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($devices as $device)
+                                            @forelse ($devices as $device)
                                                 <tr>
                                                     <td>{{ $device['name'] ?? 'N/A' }}</td>
-                                                    <td>{{ $device['number'] ?? 'N/A' }}</td>
+                                                    <td>{{ $device['device'] ?? 'N/A' }}</td>
                                                     <td>{{ $device['quota'] ?? 'N/A' }}</td>
                                                     <td>
                                                         <span
@@ -59,24 +59,41 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        @if ($device['status'] == 'connect')
-                                                            <a href="{{ route('device.disconnect', $device['id']) }}"
-                                                                class="btn btn-danger btn-sm">Disconnect</a>
+                                                        @if (isset($device['device']))
+                                                            {{-- Tombol Connect / Disconnect --}}
+                                                            @if ($device['status'] == 'disconnect')
+                                                                <button class="btn btn-success btn-sm"
+                                                                    onclick="connectDevice('{{ $device['device'] }}')">
+                                                                    Connect
+                                                                </button>
+                                                            @else
+                                                                <button class="btn btn-warning btn-sm"
+                                                                    onclick="disconnectDevice('{{ $device['device'] }}')">
+                                                                    Disconnect
+                                                                </button>
+                                                            @endif
+
+                                                            {{-- Tombol Copy Token --}}
+                                                            <button class="btn btn-secondary btn-sm"
+                                                                onclick="copyToken('{{ $device['token'] ?? '' }}')">
+                                                                Copy Token
+                                                            </button>
+
+                                                            {{-- Tombol Delete --}}
+                                                            <button class="btn btn-danger btn-sm"
+                                                                onclick="deleteDevice('{{ $device['device'] }}')">
+                                                                Delete
+                                                            </button>
                                                         @else
-                                                            <a href="{{ route('device.reconnect', $device['id']) }}"
-                                                                class="btn btn-primary btn-sm">Reconnect</a>
+                                                            <span class="text-danger">ID Not Found</span>
                                                         @endif
-                                                        <a href="{{ route('device.delete', $device['id']) }}"
-                                                            class="btn btn-danger btn-sm">Delete</a>
-                                                        <button class="btn btn-dark btn-sm">Order</button>
-                                                        <button class="btn btn-secondary btn-sm">Token</button>
-                                                        <button class="btn btn-info btn-sm">Flow</button>
-                                                        <button class="btn btn-warning btn-sm">AI</button>
-                                                        <button class="btn btn-success btn-sm">AI Data</button>
-                                                        <button class="btn btn-primary btn-sm">Edit</button>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @empty
+                                                <tr>
+                                                    <td colspan="5" class="text-center">No Devices Found</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -87,4 +104,255 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Modal QR Code -->
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">QR Code Activation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Scan QR Code di bawah ini untuk menghubungkan perangkat.</p>
+                    <div id="qrContainer">
+                        <img id="qrImage" src="" alt="QR Code" class="img-fluid d-none">
+                        <p id="qrError" class="text-danger d-none">Gagal mendapatkan QR Code.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="modal fade" id="contact-modal" tabindex="-1" aria-labelledby="contact-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="contact-modal-label">
+                        Add Device
+                    </h4>
+                    <button type="button" class="btn-close" id="btn-close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('device.add') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label" for="contact-name-field">Name</label>
+                            <input type="text" class="form-control" placeholder="Device Name" name="name"
+                                id="contact-name-field" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="phone-number-field">Device Number</label>
+                            <input type="number" class="form-control" placeholder="62812345678" name="device"
+                                id="phone-number-field" required />
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">
+                                + Add Device
+                            </button>
+                            <button class="btn btn-light ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                Close
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function connectDevice(deviceId) {
+        Swal.fire({
+            title: "Hubungkan Perangkat?",
+            text: "Apakah Anda yakin ingin menghubungkan perangkat ini?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Hubungkan!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/device/${deviceId}/connect`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        Swal.fire("Berhasil!", data.message, "success");
+                    })
+                    .catch(error => {
+                        Swal.fire("Error!", "Terjadi kesalahan!", "error");
+                    });
+            }
+        });
+    }
+
+    function disconnectDevice(deviceId) {
+        Swal.fire({
+            title: "Putuskan Perangkat?",
+            text: "Apakah Anda yakin ingin memutuskan perangkat ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Putuskan!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/device/${deviceId}/disconnect`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        Swal.fire("Berhasil!", data.message, "success");
+                    })
+                    .catch(error => {
+                        Swal.fire("Error!", "Terjadi kesalahan!", "error");
+                    });
+            }
+        });
+    }
+
+    function copyToken(token) {
+        navigator.clipboard.writeText(token)
+            .then(() => {
+                Swal.fire("Berhasil!", "Token berhasil disalin!", "success");
+            })
+            .catch(err => {
+                Swal.fire("Error!", "Gagal menyalin token.", "error");
+            });
+    }
+
+    function deleteDevice(deviceId) {
+        Swal.fire({
+            title: "Hapus Perangkat?",
+            text: "Perangkat akan dihapus secara permanen!",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Hapus!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/device/${deviceId}`, {
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        Swal.fire("Berhasil!", data.message, "success");
+                    })
+                    .catch(error => {
+                        Swal.fire("Error!", "Terjadi kesalahan!", "error");
+                    });
+            }
+        });
+    }
+
+    document.getElementById("addDeviceForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let formData = new FormData(this);
+        fetch("{{ route('device.add') }}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire("Berhasil!", data.message, "success").then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire("Gagal!", data.message || "Terjadi kesalahan", "error");
+                }
+            })
+            .catch(error => {
+                Swal.fire("Error!", "Terjadi kesalahan!", "error");
+            });
+    });
+
+    function deleteDevice(deviceId) {
+        Swal.fire({
+            title: "Konfirmasi Hapus Perangkat",
+            text: "Kami akan mengirimkan OTP ke WhatsApp Anda. Lanjutkan?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Kirim OTP!",
+            cancelButtonText: "Batal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/device/request-otp/${deviceId}`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                title: "Masukkan OTP",
+                                input: "text",
+                                inputPlaceholder: "Masukkan kode OTP dari WhatsApp",
+                                showCancelButton: true,
+                                confirmButtonText: "Hapus Perangkat",
+                                cancelButtonText: "Batal",
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return "OTP wajib diisi!";
+                                    }
+                                }
+                            }).then((otpResult) => {
+                                if (otpResult.isConfirmed) {
+                                    fetch(`/device/delete/${deviceId}`, {
+                                            method: "DELETE",
+                                            headers: {
+                                                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({
+                                                otp: otpResult.value
+                                            })
+                                        })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.success) {
+                                                Swal.fire("Berhasil!", data.message, "success")
+                                                    .then(() => {
+                                                        location.reload();
+                                                    });
+                                            } else {
+                                                Swal.fire("Gagal!", data.message, "error");
+                                            }
+                                        })
+                                        .catch(error => {
+                                            Swal.fire("Error!", "Terjadi kesalahan!", "error");
+                                        });
+                                }
+                            });
+                        } else {
+                            Swal.fire("Gagal!", data.message, "error");
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire("Error!", "Terjadi kesalahan!", "error");
+                    });
+            }
+        });
+    }
+</script>
