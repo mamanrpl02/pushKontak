@@ -11,41 +11,34 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\UpdateGrupController;
 
 Route::middleware('auth:member')->group(function () {
+
+
     // Halaman utama perangkat
     Route::get('/device', [DeviceController::class, 'index'])->name('device');
     Route::post('/devices', [DeviceController::class, 'store'])->name('devices.store');
+    Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
 
+
+
+    // Update grup
+    Route::get('/update-grup', [UpdateGrupController::class, 'index'])->name('updateGrup');
+    Route::post('/get-groups', [UpdateGrupController::class, 'getGroups'])->name('get.groups');
+    Route::post('/update-groups', [UpdateGrupController::class, 'updateGrup'])->name('update.groups');
+
+    
+    //Action
+    Route::post('/devices/disconnect', [DeviceController::class, 'disconnect'])->name('device.disconnect');
+    Route::post('/devices/connect', [DeviceController::class, 'connectDevice'])->name('device.connect');
+    Route::post('/devices/qr', [DeviceController::class, 'getQrCode'])->name('device.qr');
+    Route::post('/devices/reconnect', [DeviceController::class, 'reconnect'])->name('device.reconnect');
+    Route::delete('/devices/{device}', [DeviceController::class, 'delete'])->name('devices.delete');
+    Route::delete('/devices/{id}', [DeviceController::class, 'destroy'])->name('device.delete'); // Tambahkan route delete
     Route::post('/device/request-otp/{deviceId}', [DeviceController::class, 'requestOtp'])->name('device.requestOtp');
     Route::delete('/device/delete/{deviceId}', [DeviceController::class, 'deleteDevice'])->name('device.delete');
 
 
-    Route::post('/devices/qr', [DeviceController::class, 'getQrCode'])->name('device.qr');
-    Route::post('/devices/add', [DeviceController::class, 'addDevice'])->name('device.add');
-
-    Route::post('/devices/connect', [DeviceController::class, 'connectDevice'])->name('device.connect');
-
-
-    Route::delete('/devices/{device}', [DeviceController::class, 'delete'])->name('devices.delete');
-
-    Route::match(['get', 'post'], '/devices/activate', [DeviceController::class, 'activateDevice'])->name('device.activate');
-
-    // Kirim pesan
-    Route::get('/kirim-pesan', [KirimPesanController::class, 'index'])->name('kirimPesan.index');
-
-
-    // Update grup
-    Route::get('/updateGrup', [UpdateGrupController::class, 'index'])->name('updateGrup.index');
-
-    // CRUD Devices
-    Route::post('/devices/disconnect', [DeviceController::class, 'disconnect'])->name('device.disconnect');
-    Route::delete('/devices/{id}', [DeviceController::class, 'destroy'])->name('device.delete'); // Tambahkan route delete
-    Route::post('/devices/reconnect', [DeviceController::class, 'reconnect'])->name('device.reconnect');
-
-
     // Kirim pesan langsung dari perangkat
-    Route::post('/send-message', [KirimPesanController::class, 'index'])->name('kirimPesan');
-
-    Route::post('/update-grup', [UpdateGrupController::class, 'index'])->name('updateGrup');
+    Route::get('/send-message', [KirimPesanController::class, 'index'])->name('kirimPesan');
 
     // Logout member
     Route::post('/member-logout', [AuthenticatedSessionController::class, 'destroy'])->name('member.logout');
