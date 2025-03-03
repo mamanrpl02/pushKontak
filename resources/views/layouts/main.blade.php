@@ -186,9 +186,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link has-arrow " href="{{ route('updateGrup') }}">
+                            <a class="nav-link has-arrow " href="{{ route('viewGrup') }}">
                                 <i data-feather="send" class="nav-icon me-2 icon-xxs"></i>
                                 Update Grup
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link has-arrow " href="{{ route('list.group') }}">
+                                <i data-feather="send" class="nav-icon me-2 icon-xxs"></i>
+                                List Group
                             </a>
                         </li>
                     </ul>

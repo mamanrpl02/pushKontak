@@ -3,24 +3,41 @@
 @section('content')
     <h1 style="margin-top: 5rem" class="p-7 pb-0">Update Grup</h1>
     <div class="container bg-white rounded-lg p-7">
-        <form class="row g-3 needs-validation" action="{{ route('update.groups') }}" method="POST" novalidate>
+
+        {{-- Notifikasi Sukses atau Error --}}
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        {{-- Form Pilih Perangkat --}}
+        <form class="row g-3 needs-validation" action="{{ route('list.grup') }}" method="POST" novalidate>
             @csrf
             <div class="mb-3">
-                <label class="form-label" for="deviceSelect">Pilih Perangkat <span class="text-secondary"></span></label>
-                <select class="form-select" id="deviceSelect" name="device_name" aria-label="Default select example">
-                    <option selected>Pilih Perangkat</option>
+                <label class="form-label" for="deviceSelect">Pilih Perangkat</label>
+                <select class="form-select" id="deviceSelect" name="device_name" required>
+                    <option value="">Pilih Perangkat</option>
                     @foreach ($devices as $device)
-                        <option value="{{ $device['name'] ?? 'N/A' }}">{{ $device['name'] ?? 'N/A' }}</option>
+                        <option value="{{ $device['token'] ?? 'N/A' }}">{{ $device['name'] ?? 'N/A' }}</option>
                     @endforeach
                 </select>
             </div>
+
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">Update</button>
+                <button class="btn btn-primary" type="submit">Tampilkan Grup</button>
             </div>
         </form>
 
-        <div id="groups-container" style="display: none;">
-            <h2 class="mt-4">Daftar Grup</h2>
+        {{-- List Grup --}}
+        <div id="groups-container" class="mt-4">
+            <h2>Daftar Grup</h2>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered" id="groups-table">
                     <thead>
@@ -30,59 +47,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        </tbody>
+                        @foreach ($groups as $group)
+                            <tr data-device="{{ $group['device_token'] ?? 'N/A' }}">
+                                <td>{{ $group['name'] ?? 'Tidak Ada Nama' }}</td>
+                                <td>{{ $group['id'] ?? '-' }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
-
-    {{-- <script>
-        document.getElementById('deviceSelect').addEventListener('change', function() {
-            const deviceName = this.value;
-
-            if (deviceName === 'Pilih Perangkat') {
-                document.getElementById('groups-container').style.display = 'none';
-                return;
-            }
-
-            fetch('{{ route('get.groups') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ device_name: deviceName })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                    return;
-                }
-
-                const tableBody = document.querySelector('#groups-table tbody');
-                tableBody.innerHTML = ''; // Bersihkan tabel sebelum menambahkan data baru
-
-                if (data.groups && data.groups.length > 0) {
-                    data.groups.forEach(group => {
-                        const row = `
-                            <tr>
-                                <td>${group.group_name || 'N/A'}</td>
-                                <td>${group.group_id || 'N/A'}</td>
-                            </tr>
-                        `;
-                        tableBody.innerHTML += row;
-                    });
-                    document.getElementById('groups-container').style.display = 'block';
-                } else {
-                    tableBody.innerHTML = '<tr><td colspan="2">Tidak ada grup tersedia.</td></tr>';
-                    document.getElementById('groups-container').style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat mengambil daftar grup.');
-            });
-        });
-    </script> --}}
 @endsection

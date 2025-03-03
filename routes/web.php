@@ -8,6 +8,7 @@ use App\Http\Controllers\KirimPesanController;
 use App\Http\Controllers\TambahPerangkatController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\GrupWhatsAppController;
 use App\Http\Controllers\UpdateGrupController;
 
 Route::middleware('auth:member')->group(function () {
@@ -20,12 +21,15 @@ Route::middleware('auth:member')->group(function () {
 
 
 
-    // Update grup
-    Route::get('/update-grup', [UpdateGrupController::class, 'index'])->name('updateGrup');
-    Route::post('/get-groups', [UpdateGrupController::class, 'getGroups'])->name('get.groups');
-    Route::post('/update-groups', [UpdateGrupController::class, 'updateGrup'])->name('update.groups');
+    // GroupUpdate
+    Route::get('/update-grup', [UpdateGrupController::class, 'index'])->name('viewGrup');
+    Route::post('/update-grup/update', [UpdateGrupController::class, 'updateGrup'])->name('update.groups');
 
-    
+    // List Group
+    Route::get('/list-group', [GrupWhatsAppController::class, 'index'])->name('list.group');
+
+    Route::post('/list-group', [GrupWhatsAppController::class, 'getGroupsByDevice'])->name('showGroup');
+
     //Action
     Route::post('/devices/disconnect', [DeviceController::class, 'disconnect'])->name('device.disconnect');
     Route::post('/devices/connect', [DeviceController::class, 'connectDevice'])->name('device.connect');

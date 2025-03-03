@@ -61,7 +61,7 @@
                                                     <td>
                                                         @if (isset($device['device']))
                                                             {{-- Tombol Connect / Disconnect --}}
-                                                            @if ($device['status'] == 'disconnect')
+                                                            {{-- @if ($device['status'] == 'disconnect')
                                                                 <button class="btn btn-success btn-sm"
                                                                     onclick="connectDevice('{{ $device['device'] }}')">
                                                                     Connect
@@ -71,7 +71,7 @@
                                                                     onclick="disconnectDevice('{{ $device['device'] }}')">
                                                                     Disconnect
                                                                 </button>
-                                                            @endif
+                                                            @endif --}}
 
                                                             {{-- Tombol Copy Token --}}
                                                             <button class="btn btn-secondary btn-sm"
