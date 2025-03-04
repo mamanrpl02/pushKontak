@@ -9,18 +9,10 @@ use Illuminate\Support\Facades\Http;
 
 class GrupWhatsAppController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $member = Auth::user();
         $token = Auth::user()->tokenAkun;
-
-        // Ambil data grup dari API Fonnte
-        $responseGroups = Http::withHeaders([
-            'Authorization' => $token, // Ganti dengan token Fonnte Anda
-        ])->post('https://api.fonnte.com/get-whatsapp-group');
-
-        $dataGroups = $responseGroups->json();
-        $groups = $dataGroups['data'] ?? [];
 
         // Ambil data perangkat dari API Fonnte
         $responseDevices = Http::withHeaders([
@@ -30,47 +22,32 @@ class GrupWhatsAppController extends Controller
         $dataDevices = $responseDevices->json();
         $devices = $dataDevices['data'] ?? [];
 
+        // Ambil nilai perangkat yang dipilih dari request
+        $selectedDeviceToken = $request->input('device');
+
+        // Inisialisasi grup
+        $groups = [];
+
+        // Jika ada perangkat yang dipilih, ambil data grup
+        if ($selectedDeviceToken && $selectedDeviceToken !== '0') {
+            // Ambil data grup dari API Fonnte
+            $responseGroups = Http::withHeaders([
+                'Authorization' => $selectedDeviceToken, // Gunakan token perangkat yang dipilih
+            ])->post('https://api.fonnte.com/get-whatsapp-group');
+
+            $dataGroups = $responseGroups->json();
+            $groups = $dataGroups['data'] ?? [];
+
+            // Uraikan jumlah anggota dari string JSON
+            foreach ($groups as &$group) {
+                // Mengubah string JSON menjadi array
+                $membersArray = json_decode($group['member'], true);
+                // Hitung jumlah anggota
+                $group['member_count'] = is_array($membersArray) ? count($membersArray) : 0;
+            }
+        }
+
         // Kirim data ke tampilan
-        return view('listGroup', compact('groups', 'devices', 'member'));
+        return view('listGroup', compact('devices', 'member', 'groups'));
     }
-
-    public function getGroupsByDevice(Request $request)
-    {
-        $deviceToken = $request->query('device');
-        $member = Auth::user();
-        $token = Auth::user()->tokenAkun;
-
-        // Ambil data grup dari API Fonnte berdasarkan perangkat
-        $response = Http::withHeaders([
-            'Authorization' => $token,
-        ])->post('https://api.fonnte.com/get-whatsapp-group', [
-            'device_token' => $deviceToken, // Kirim token perangkat jika diperlukan
-        ]);
-
-        $data = $response->json();
-        $groups = $data['data'] ?? [];
-
-        return response()->json(['groups' => $groups]);
-    }
-
-    // public function updateGroup()
-    // {
-    //     $token = Auth::user()->tokenAkun;
-
-    //     // Ambil data grup dari API Fonnte
-    //     $response = Http::withHeaders([
-    //         'Authorization' => $token , // Ganti dengan token Fonnte Anda
-    //     ])->post('https://api.fonnte.com/fetch-group');
-
-
-    //     // Ambil respons dari API
-    //     $data = $response->json();
-
-    //     // Periksa apakah update berhasil
-    //     if ($response->successful() &&   isset($data['status']) && $data['status'] === true) {
-    //         return redirect()->back()->with('success', 'Grup berhasil diperbarui.');
-    //     } else {
-    //         return redirect()->back()->with('error', 'Gagal memperbarui grup.');
-    //     }
-    // }
 }

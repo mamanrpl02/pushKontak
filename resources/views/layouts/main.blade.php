@@ -34,7 +34,10 @@
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{ asset('dashuipro/assets/css/theme.min.css') }}">
-
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -181,19 +184,19 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('kirimPesan') }}">
-                                <i data-feather="send" class="nav-icon me-2 icon-xxs"></i>
+                                <i class="bi bi-chat-dots nav-icon me-2 icon-xxs"></i>
                                 Kirim Pesan
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('viewGrup') }}">
-                                <i data-feather="send" class="nav-icon me-2 icon-xxs"></i>
+                                <i class="bi bi-database-up nav-icon me-2 icon-xxs"></i>
                                 Update Grup
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('list.group') }}">
-                                <i data-feather="send" class="nav-icon me-2 icon-xxs"></i>
+                                <i class="bi-list-stars nav-icon me-2 icon-xxs"></i>
                                 List Group
                             </a>
                         </li>
