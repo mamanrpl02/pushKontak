@@ -272,7 +272,6 @@
                         <div class="input-box">
                             <i class="fas fa-lock"></i>
                             <input type="password" name="password" required placeholder="Password">
-
                         </div>
 
                         @if ($errors->any())

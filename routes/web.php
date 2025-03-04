@@ -51,7 +51,8 @@ Route::middleware('auth:member')->group(function () {
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('/', [AuthenticatedSessionController::class, 'store']);
 });
+
 
 require __DIR__ . '/auth.php';

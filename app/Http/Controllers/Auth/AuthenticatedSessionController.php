@@ -61,6 +61,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect ke halaman utama setelah logout
-        return redirect('/  ');
+        return redirect('/');
     }
 }
