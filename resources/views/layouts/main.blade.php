@@ -51,7 +51,8 @@
             <div class="navbar-custom navbar navbar-expand-lg">
                 <div class="container-fluid px-0">
                     <a class="navbar-brand d-block d-md-none" href="index.html">
-                        <img src="{{ asset('dashuipro/assets/images/brand/logo/logo-2.svg') }}" alt="Image" />
+                        <h4>Manzz Web</h4>
+                        {{-- <img src="{{ asset('dashuipro/assets/images/brand/logo/logo-2.svg') }}" alt="Image" /> --}}
                     </a>
 
 
@@ -126,16 +127,13 @@
                             <a class="rounded-circle" href="#!" role="button" id="dropdownUser"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="avatar avatar-md avatar-indicators avatar-online">
-                                    <img alt="avatar"
-                                        src="{{ asset('dashuipro/assets/images/avatar/avatar-11.jpg') }}"
-                                        class="rounded-circle" />
+                                    <img alt="avatar" src="storage/{{ $member->gambar }}" class="rounded-circle" />
                                 </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
                                 <div class="px-4 pb-0 pt-2">
                                     <div class="lh-1">
                                         <h5 class="mb-1">{{ $member->nama }}</h5>
-                                        {{-- <a href="#!" class="text-inherit fs-6">View my profile</a> --}}
                                     </div>
                                     <div class="dropdown-divider mt-3 mb-2"></div>
                                 </div>

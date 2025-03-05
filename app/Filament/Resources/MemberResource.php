@@ -8,7 +8,10 @@ use App\Models\Member;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\MemberResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -33,8 +36,11 @@ class MemberResource extends Resource
                     ->revealable()
                     ->dehydrated(fn(?string $state): bool => filled($state))
                     ->label('Password'),
-                TextInput::make('gambar')->label('Gambar')
-                    ->required(),
+                FileUpload::make('gambar')
+                    ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/jpg'])
+                    ->directory('profile')
+                    ->image()
+                    ->imageEditor(),
                 TextInput::make('tokenAkun')
                     ->required(),
             ]);
@@ -47,7 +53,9 @@ class MemberResource extends Resource
                 Tables\Columns\TextColumn::make('nama')->sortable(),
                 Tables\Columns\TextColumn::make('noHp')->sortable(),
                 Tables\Columns\TextColumn::make('email')->sortable(),
-                Tables\Columns\TextColumn::make('gambar')->sortable(),
+                ImageColumn::make('gambar')
+                    ->label('Profile')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('tokenAkun')->sortable(),
 
             ])
