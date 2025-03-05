@@ -59,9 +59,10 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        @if (isset($device['device']))
-                                                            {{-- Tombol Connect / Disconnect --}}
-                                                            {{-- @if ($device['status'] == 'disconnect')
+                                                        <div class="action" style="display: flex;">
+                                                            @if (isset($device['device']))
+                                                                {{-- Tombol Connect / Disconnect --}}
+                                                                {{-- @if ($device['status'] == 'disconnect')
                                                                 <button class="btn btn-success btn-sm"
                                                                     onclick="connectDevice('{{ $device['device'] }}')">
                                                                     Connect
@@ -73,20 +74,21 @@
                                                                 </button>
                                                             @endif --}}
 
-                                                            {{-- Tombol Copy Token --}}
-                                                            <button class="btn btn-secondary btn-sm"
-                                                                onclick="copyToken('{{ $device['token'] ?? '' }}')">
-                                                                Copy Token
-                                                            </button>
+                                                                {{-- Tombol Copy Token --}}
+                                                                <button class="btn btn-secondary btn-sm" style="margin-right: 0.2rem"
+                                                                    onclick="copyToken('{{ $device['token'] ?? '' }}')">
+                                                                    Copy Token
+                                                                </button>
 
-                                                            {{-- Tombol Delete --}}
-                                                            <button class="btn btn-danger btn-sm"
-                                                                onclick="deleteDevice('{{ $device['device'] }}')">
-                                                                Delete
-                                                            </button>
-                                                        @else
-                                                            <span class="text-danger">ID Not Found</span>
-                                                        @endif
+                                                                {{-- Tombol Delete --}}
+                                                                <button class="btn btn-danger btn-sm"
+                                                                    onclick="deleteDevice('{{ $device['device'] }}')">
+                                                                    Delete
+                                                                </button>
+                                                            @else
+                                                                <span class="text-danger">ID Not Found</span>
+                                                            @endif
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             @empty
@@ -166,7 +168,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
