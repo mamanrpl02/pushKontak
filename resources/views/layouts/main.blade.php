@@ -167,8 +167,7 @@
                 <div class="h-100" data-simplebar>
                     <!-- Brand logo -->
                     <a class="navbar-brand" href="index.html">
-                        <img src="{{ asset('dashuipro/assets/images/brand/logo/logo-2.svg') }}"
-                            alt="dash ui - bootstrap 5 admin dashboard template" />
+                        <h4>Manz Web</h4>
                     </a>
                     <!-- Navbar nav -->
                     <ul class="navbar-nav flex-column" id="sideNavbar">
@@ -187,7 +186,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link has-arrow " href="{{ route('viewGrup') }}">
+                            <a class="nav-link has-arrow " href="{{ route('upGroup.view') }}">
                                 <i class="bi bi-database-up nav-icon me-2 icon-xxs"></i>
                                 Update Grup
                             </a>

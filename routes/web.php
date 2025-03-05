@@ -22,8 +22,8 @@ Route::middleware('auth:member')->group(function () {
 
 
     // GroupUpdate
-    Route::get('/update-grup', [UpdateGrupController::class, 'index'])->name('viewGrup');
-    Route::post('/update-grup/update', [UpdateGrupController::class, 'updateGrup'])->name('update.groups');
+    Route::get('/update-grup', [UpdateGrupController::class, 'index'])->name('upGroup.view');
+    Route::post('/update-grup', [UpdateGrupController::class, 'updateGroup'])->name('upGroup.sub');
 
     // List Group
     Route::get('/list-group', [GrupWhatsAppController::class, 'index'])->name('list.group');

@@ -31,67 +31,31 @@ class UpdateGrupController extends Controller
         return view('updateGrup', compact('member', 'devices', 'groups'));
     }
 
-    private function getApiKeyForDevice($deviceName, $deviceToken)
+    public function updateGroup(Request $request)
     {
-        $response = Http::withHeaders([
-            'Authorization' => $deviceToken,
-        ])->post('https://api.fonnte.com/get-devices');
-
-        $data = $response->json();
-
-        if ($response->failed() || !isset($data['data']) || !is_array($data['data'])) {
-            Log::error('Gagal mendapatkan data perangkat dari API Fonnte', ['response' => $data]);
-            return null;
-        }
-
-        foreach ($data['data'] as $device) {
-            if (isset($device['name']) && $device['name'] === $deviceName) {
-                return $device['api_key'] ?? null;
-            }
-        }
-
-        return null;
-    }
-
-    public function updateGrup(Request $request)
-    {
+        // Validasi input, pastikan token perangkat dipilih
         $request->validate([
-            'device_name'  => 'required|string',
-            'device_token' => 'required|string|min:10|max:50',
+            'device_name' => 'required|not_in:0'
         ], [
-            'device_name.required'  => 'Pilih perangkat terlebih dahulu.',
-            'device_token.required' => 'Token perangkat wajib diisi.',
-            'device_token.min'      => 'Token perangkat minimal 10 karakter.',
-            'device_token.max'      => 'Token perangkat maksimal 50 karakter.',
+            'device_name.not_in' => 'Silakan pilih perangkat terlebih dahulu.'
         ]);
 
-        $deviceName  = $request->input('device_name');
-        $deviceToken = $request->input('device_token');
+        // Ambil token dari form select option
+        $token = $request->device_name;
 
-        $apiKey = $this->getApiKeyForDevice($deviceName, $deviceToken);
-
-        if (!$apiKey) {
-            return redirect()->back()->with('error', 'Token atau perangkat tidak valid.');
-        }
-
-        // 🔹 **Ambil daftar grup setelah token valid**
+        // Kirim permintaan ke API Fonnte
         $response = Http::withHeaders([
-            'Authorization' => $apiKey,
+            'Authorization' => $token, // Gunakan token yang dipilih
         ])->post('https://api.fonnte.com/fetch-group');
 
+        // Ambil respons dari API
         $data = $response->json();
 
-        if ($response->failed() || !isset($data['data'])) {
-            Log::error('Gagal mengambil daftar grup', ['response' => $data]);
-            return redirect()->back()->with('error', 'Gagal mengambil daftar grup.');
+        // Periksa apakah update berhasil
+        if ($response->successful() && isset($data['status']) && $data['status'] === true) {
+            return redirect()->back()->with('success', 'Grup berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal memperbarui grup. Silakan coba lagi.');
         }
-
-        $groups = collect($data['data']);
-
-        // Simpan daftar grup di session agar bisa diakses setelah redirect
-        return redirect()->route('update-grup')->with([
-            'success' => "Perangkat: $deviceName berhasil diperbarui!",
-            'groups'  => $groups,
-        ]);
     }
 }
