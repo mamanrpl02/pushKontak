@@ -105,6 +105,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'member' => [
+            'provider' => 'member', // <-- HARUS COCOK DENGAN YANG ADA DI 'providers'
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*

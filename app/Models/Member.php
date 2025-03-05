@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Member extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable, CanResetPassword;
 
     protected $table = 'members'; // Ini harus sama dengan nama tabel Anda di database
 
@@ -25,9 +27,8 @@ class Member extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Model Hook untuk Hash Password
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = bcrypt($value);
+        $this->attributes['password'] = $value; // Biarkan Controller yang Hash
     }
 }
