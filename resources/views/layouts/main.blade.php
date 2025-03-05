@@ -186,6 +186,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link has-arrow " href="{{ route('copyNomor') }}">
+                                <i class="bi bi-chat-dots nav-icon me-2 icon-xxs"></i>
+                                Copy Nomor
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('upGroup.view') }}">
                                 <i class="bi bi-database-up nav-icon me-2 icon-xxs"></i>
                                 Update Grup
