@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdjustNumberController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -31,10 +32,7 @@ Route::middleware('auth:member')->group(function () {
     Route::delete('/devices/{id}', [DeviceController::class, 'destroy'])->name('device.delete'); // Tambahkan route delete
     Route::post('/device/request-otp/{deviceId}', [DeviceController::class, 'requestOtp'])->name('device.requestOtp');
     Route::delete('/device/delete/{deviceId}', [DeviceController::class, 'deleteDevice'])->name('device.delete');
-
-    // Copy Nomor
-    Route::get('/copyNomor', [UpdateGrupController::class, 'index'])->name('copyNomor');
-
+ 
     Route::get('/fonnte/group/{groupId}/numbers', function ($groupId, Request $request) {
         $limit = $request->query('limit', 10); // Default ambil 10 nomor
 
@@ -44,23 +42,23 @@ Route::middleware('auth:member')->group(function () {
         // Request ke API Fonnte yang benar
         $response = Http::withHeaders([
             'Authorization' => $token
-        ])->get("https://api.fonnte.com/get-whatsapp-group");
+            ])->get("https://api.fonnte.com/get-whatsapp-group");
 
-        $data = $response->json();
+            $data = $response->json();
 
-        // Cek apakah respons berhasil
-        if (!$response->successful()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal menghubungi API Fonnte',
-                'error' => $response->body()
-            ], 500);
-        }
+            // Cek apakah respons berhasil
+            if (!$response->successful()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menghubungi API Fonnte',
+                    'error' => $response->body()
+                ], 500);
+            }
 
-        // Pastikan ada data grup dalam response
-        if (!isset($data['groups']) || !is_array($data['groups'])) {
-            return response()->json([
-                'success' => false,
+            // Pastikan ada data grup dalam response
+            if (!isset($data['groups']) || !is_array($data['groups'])) {
+                return response()->json([
+                    'success' => false,
                 'message' => 'Data grup tidak ditemukan dalam respons API'
             ], 400);
         }
@@ -84,6 +82,7 @@ Route::middleware('auth:member')->group(function () {
         ]);
     });
 
+    Route::get('/adjust-nomor', [AdjustNumberController::class, 'index'])->name('adjustNomor');
 
 
 

@@ -176,31 +176,31 @@
                         <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('device') }}">
                                 <i data-feather="monitor" class="nav-icon me-2 icon-xxs"></i>
-                                Perangkat
+                                Devices
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('kirimPesan') }}">
                                 <i class="bi bi-chat-dots nav-icon me-2 icon-xxs"></i>
-                                Kirim Pesan
+                                Send Message
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link has-arrow " href="{{ route('copyNomor') }}">
-                                <i class="bi bi-chat-dots nav-icon me-2 icon-xxs"></i>
-                                Copy Nomor
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link has-arrow " href="{{ route('upGroup.view') }}">
-                                <i class="bi bi-database-up nav-icon me-2 icon-xxs"></i>
-                                Update Grup
+                            <a class="nav-link has-arrow " href="{{ route('adjustNomor') }}">
+                                <i class="bi bi-clipboard2-pulse nav-icon me-2 icon-xxs"></i>
+                                Adjust Number
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link has-arrow " href="{{ route('list.group') }}">
                                 <i class="bi-list-stars nav-icon me-2 icon-xxs"></i>
                                 List Group
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link has-arrow " href="{{ route('upGroup.view') }}">
+                                <i class="bi bi-database-up nav-icon me-2 icon-xxs"></i>
+                                Update Group
                             </a>
                         </li>
                     </ul>
